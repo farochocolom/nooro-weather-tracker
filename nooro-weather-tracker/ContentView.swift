@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = WeatherViewModel()
     var body: some View {
         VStack {
+            
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("\(viewModel.weatherData?.currentData.temperature)")
         }
         .padding()
+        .onAppear {
+            viewModel.fetchUsers()
+        }
     }
 }
 
