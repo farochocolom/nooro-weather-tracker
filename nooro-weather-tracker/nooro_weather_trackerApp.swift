@@ -12,6 +12,7 @@ struct nooro_weather_trackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(WeatherViewModel())
         }
     }
 }
