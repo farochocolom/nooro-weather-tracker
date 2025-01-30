@@ -7,30 +7,35 @@
 
 import Foundation
 
-struct WeatherData: Codable {
+struct WeatherData: Decodable {
     let temperature: Double
-//    let condition: String
+    let condition: Condition
     let humidity: Int
     let uvIndex: Double
     let feelsLike: Double
     
     enum CodingKeys: String, CodingKey {
         case temperature = "temp_f"
-//        case condition
+        case condition
         case humidity
         case uvIndex = "uv"
         case feelsLike = "feelslike_f"
     }
-    
-//    - City name.
-//    - Temperature.
-//    - Weather condition (with corresponding icon from the API).
-//    - Humidity (%).
-//    - UV index.
-//    - "Feels like" temperature.
 }
 
-struct Weather: Codable {
+struct Condition: Decodable {
+    let text: String
+    let icon: URL
+    
+    var iconURL: String? {
+        var components = URLComponents(url: icon, resolvingAgainstBaseURL: false)
+        components?.scheme = "https"
+        // increasing resolution
+        return components?.string?.replacingOccurrences(of: "64x64", with: "128x128")
+    }
+}
+
+struct Weather: Decodable {
     let currentData: WeatherData
     let city: City
     
